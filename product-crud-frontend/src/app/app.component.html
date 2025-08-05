@@ -1,0 +1,31 @@
+<h2>Products</h2>
+<form (ngSubmit)="save()" class="product-form">
+<input [(ngModel)]="newProduct.name" name="name" placeholder="Product Name"
+required>
+<input [(ngModel)]="newProduct.price" name="price" placeholder="Price"
+type="number" required>
+<button type="submit">Add</button>
+</form>
+<table class="product-table">
+<tr><th>ID</th><th>Name</th><th>Price</th><th>Actions</th></tr>
+<tr *ngFor="let p of products">
+<td>{{p.id}}</td>
+<td *ngIf="!editProduct || editProduct.id !== p.id">{{p.name}}</td>
+<td *ngIf="editProduct && editProduct.id === p.id">
+<input [(ngModel)]="editProduct.name" name="editName">
+</td>
+<td *ngIf="!editProduct || editProduct.id !== p.id">{{p.price}}</td>
+<td *ngIf="editProduct && editProduct.id === p.id">
+<input [(ngModel)]="editProduct.price" name="editPrice" type="number">
+</td>
+<td>
+<button *ngIf="!editProduct || editProduct.id !== p.id"
+(click)="startEdit(p)">Edit</button>
+<button *ngIf="editProduct && editProduct.id === p.id"
+(click)="update()">Save</button>
+<button *ngIf="editProduct && editProduct.id === p.id"
+(click)="cancelEdit()">Cancel</button>
+<button (click)="delete(p.id)">Delete</button>
+</td>
+</tr>
+</table>
